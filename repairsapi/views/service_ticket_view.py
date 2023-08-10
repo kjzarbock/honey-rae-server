@@ -15,8 +15,10 @@ class ServiceTicketView(ViewSet):
         Returns:
             Response -- JSON serialized list of customers
         """
-
-        serviceTickets = ServiceTicket.objects.all()
+        if request.auth.user.is_staff:
+            serviceTickets = ServiceTicket.objects.all()
+        else:
+            serviceTickets = ServiceTicket.objects.filter(customer=request.auth.user.customer)
         serialized = ServiceTicketSerializer(serviceTickets, many=True)
         return Response(serialized.data, status=status.HTTP_200_OK)
 
@@ -37,3 +39,4 @@ class ServiceTicketSerializer(serializers.ModelSerializer):
     class Meta:
         model = ServiceTicket
         fields = ('id', 'description', 'emergency', 'date_completed', 'customer', 'employee')
+        depth = 1
