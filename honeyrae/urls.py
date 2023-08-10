@@ -12,6 +12,7 @@ router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'customers', CustomerView, 'customer')
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'employees', EmployeeView, 'employee')
+router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'serviceTickets', ServiceTicketView, 'serviceTicket')
 
 
