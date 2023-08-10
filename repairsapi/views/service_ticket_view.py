@@ -12,6 +12,7 @@ class ServiceTicketView(ViewSet):
     """Honey Rae API customers view"""
 
     def create(self, request):
+        """method to handle POST operations"""
         new_ticket = ServiceTicket()
         new_ticket.customer = Customer.objects.get(user=request.auth.user)
         new_ticket.description = request.data['description']
@@ -21,6 +22,17 @@ class ServiceTicketView(ViewSet):
         serialized = ServiceTicketSerializer(new_ticket, many=False)
 
         return Response(serialized.data, status=status.HTTP_201_CREATED)
+    
+    def update(self, request, pk=None):
+        """Method to handle PUT requests for a ticket"""
+        ticket = ServiceTicket.objects.get(pk=pk)
+        employee_id = request.data['employee']
+        assigned_employee = Employee.objects.get(pk=employee_id)
+        ticket.employee = assigned_employee
+        ticket.save()
+
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
+
 
     def list(self, request):
         """Handle GET requests to get all customers
