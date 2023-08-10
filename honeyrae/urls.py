@@ -6,10 +6,14 @@ from django.conf.urls import include
 from rest_framework import routers
 from repairsapi.views import CustomerView
 from repairsapi.views import EmployeeView
+from repairsapi.views import ServiceTicketView
 
 router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'customers', CustomerView, 'customer')
+router = routers.DefaultRouter(trailing_slash=False)
 router.register(r'employees', EmployeeView, 'employee')
+router.register(r'serviceTickets', ServiceTicketView, 'serviceTicket')
+
 
 
 
