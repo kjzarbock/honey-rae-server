@@ -36,7 +36,6 @@ class ServiceTicketView(ViewSet):
 
     def list(self, request):
         """Handle GET requests to get all customers
-
         Returns:
             Response -- JSON serialized list of customers
         """
@@ -74,6 +73,12 @@ class ServiceTicketView(ViewSet):
         serviceTicket = ServiceTicket.objects.get(pk=pk)
         serialized = ServiceTicketSerializer(serviceTicket, context={'request': request})
         return Response(serialized.data, status=status.HTTP_200_OK)
+    
+    def destroy(self, request, pk=None):
+        serviceTicket = ServiceTicket.objects.get(pk=pk)
+        serviceTicket.delete()
+
+        return Response(None, status=status.HTTP_204_NO_CONTENT)
 
 class TicketEmployeeSerializer(serializers.ModelSerializer):
 
